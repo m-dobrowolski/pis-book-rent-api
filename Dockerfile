@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/book-rent-api-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the application port
-EXPOSE 8080
+EXPOSE 8007
 
 # Run the jar file
 ENTRYPOINT ["java", "-jar", "app.jar"]
