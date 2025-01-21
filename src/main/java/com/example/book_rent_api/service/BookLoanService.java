@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookLoanService {
@@ -55,47 +56,12 @@ public class BookLoanService {
 
         return bookLoanRepository.findByUser(user);
     }
+
+    public Optional<BookLoan> getLoanByBookId(Long bookId) {
+        LocalBook book = localBookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalStateException("Book not found"));
+
+        return bookLoanRepository.findByBookAndReturnDateIsNull(book);
+    }
 }
-//@Service
-//public class BookLoanService {
-//
-//    @Autowired
-//    private LocalUserRepository localUserRepository;
-//
-//    @Autowired
-//    private LocalBookRepository localBookRepository;
-//
-//    @Autowired
-//    private BookLoanRepository bookLoanRepository;
-//
-//    public ResponseEntity<?> processLoanRequest(BookLoanDTO bookLoanDTO) {
-//        Optional<LocalUser> userOpt = localUserRepository.findById(bookLoanDTO.getUserId());
-//        if (userOpt.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-//        }
-//
-//        Optional<LocalBook> bookOpt = localBookRepository.findById(bookLoanDTO.getBookId());
-//        if (bookOpt.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found");
-//        }
-//
-//        LocalUser user = userOpt.get();
-//        LocalBook book = bookOpt.get();
-//
-//        if (bookLoanRepository.existsByBookAndReturnDateIsNull(book)) {
-//            return ResponseEntity.status(HttpStatus.CONFLICT)
-//                    .body("This book is already loaned and cannot be rented at the same time.");
-//        }
-//
-//        // Create and save loan
-//        BookLoan bookLoan = new BookLoan();
-//        bookLoan.setUser(user);
-//        bookLoan.setBook(book);
-//        bookLoan.setDateFrom(bookLoanDTO.getDateFrom());
-//        bookLoan.setDateTo(bookLoanDTO.getDateTo());
-//
-//        BookLoan savedLoan = bookLoanRepository.save(bookLoan);
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body(savedLoan);
-//    }
-//}
+
