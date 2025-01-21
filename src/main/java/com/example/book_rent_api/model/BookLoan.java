@@ -22,6 +22,8 @@ public class BookLoan {
     private LocalDate dateFrom;
     private LocalDate dateTo;
 
+    private LocalDate returnDate;
+
     // Getters and Setters
     public Long getLoanId() { return loanId; }
     public void setLoanId(Long loanId) { this.loanId = loanId; }
@@ -37,4 +39,7 @@ public class BookLoan {
 
     public LocalDate getDateTo() { return dateTo; }
     public void setDateTo(LocalDate dateTo) { this.dateTo = dateTo; }
+
+    public LocalDate getReturnDate() { return returnDate; }
+    public void setReturnDate(LocalDate returnDate) { this.returnDate = returnDate; }
 }
