@@ -16,7 +16,7 @@ public class BookReturnController {
     private BookReturnService bookReturnService;
 
     // Endpoint to return a book
-    @PutMapping("/{bookId}/")
+    @PutMapping("/{bookId}")
     public ResponseEntity<?> returnBook(@PathVariable Long bookId) {
         return bookReturnService.processBookReturn(bookId);
     }

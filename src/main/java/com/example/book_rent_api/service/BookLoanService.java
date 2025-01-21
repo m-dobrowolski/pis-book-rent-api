@@ -48,6 +48,13 @@ public class BookLoanService {
 
         return bookLoanRepository.save(bookLoan);
     }
+
+    public List<BookLoan> getLoansByUserId(Long userId) {
+        LocalUser user = localUserRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("User not found"));
+
+        return bookLoanRepository.findByUser(user);
+    }
 }
 //@Service
 //public class BookLoanService {
