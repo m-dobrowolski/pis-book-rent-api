@@ -1,5 +1,6 @@
 package com.example.book_rent_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class LocalBook {
     private Long bookId;
 
     @OneToMany(mappedBy = "book")
+    @JsonIgnore
     private List<BookLoan> bookLoans;
 
     // Getters and Setters
