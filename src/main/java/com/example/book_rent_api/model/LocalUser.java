@@ -9,8 +9,8 @@ import java.util.List;
 public class LocalUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore

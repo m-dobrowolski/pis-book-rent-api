@@ -29,12 +29,21 @@ public class BookLoanService {
         return bookLoanRepository.findAll();
     }
 
+
     public BookLoan processLoanRequest(BookLoanDTO bookLoanDTO) {
         LocalUser user = localUserRepository.findById(bookLoanDTO.getUserId())
-                .orElseThrow(() -> new IllegalStateException("User not found"));
+                .orElseGet(() -> {
+                    LocalUser newUser = new LocalUser();
+                    newUser.setUserId(bookLoanDTO.getUserId());
+                    return localUserRepository.save(newUser);
+                });
 
         LocalBook book = localBookRepository.findById(bookLoanDTO.getBookId())
-                .orElseThrow(() -> new IllegalStateException("Book not found"));
+                .orElseGet(() -> {
+                    LocalBook newBook = new LocalBook();
+                    newBook.setBookId(bookLoanDTO.getBookId());
+                    return localBookRepository.save(newBook);
+                });
 
         if (bookLoanRepository.existsByBookAndReturnDateIsNull(book)) {
             throw new IllegalStateException("This book is already loaned and cannot be rented at the same time.");
