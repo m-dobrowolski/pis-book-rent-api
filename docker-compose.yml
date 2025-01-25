@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres-db:
     container_name: postgres-db
@@ -12,7 +10,7 @@ services:
       POSTGRES_USER: bookrentuser
       POSTGRES_PASSWORD: bookrentpass
     networks:
-      - app-network
+      - shared-network
 
   book-rent-api:
     container_name: book-rent-api
@@ -20,17 +18,18 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8007:8007"
+      - "8007:8080"
     depends_on:
       - postgres-db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5437/bookrentdb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/bookrentdb
       SPRING_DATASOURCE_USERNAME: bookrentuser
       SPRING_DATASOURCE_PASSWORD: bookrentpass
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
     networks:
-      - app-network
+      - shared-network
 
 networks:
-  app-network:
+  shared-network:
+    external: true
