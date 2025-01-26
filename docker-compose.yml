@@ -27,6 +27,9 @@ services:
       SPRING_DATASOURCE_PASSWORD: bookrentpass
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
+      KAFKA_BROKERS: kafka:29092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:29092
+      SPRING_KAFKA_PRODUCER_BOOTSTRAP-SERVERS: kafka:29092
     networks:
       - shared-network
 
